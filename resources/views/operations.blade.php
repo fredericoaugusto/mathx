@@ -20,8 +20,6 @@
     <img src="{{ asset('assets/images/logo.jpg') }}" alt="logo" class="img-fluid" width="250px">
 </div>
 
-
-
 <!-- operations -->
 <div class="container">
 
@@ -32,7 +30,7 @@
         @foreach($exercises as $exercise)
 
               <div class="col-3 display-6 mb-3">
-                  <span class="badge bg-dark">{{ str_pad($exercise['exercise_number'], 2, '0', STR_PAD_LEFT) }}</span>
+                  <span class="badge bg-dark">{{ $exercise['exercise_number'] }}</span>
                   <span>{{ $exercise['exercise'] }}</span>
               </div>
 
@@ -45,7 +43,6 @@
 
 </div>
 
-<!-- print version -->
 <div class="container mt-5">
     <div class="row">
         <div class="col">
@@ -57,8 +54,6 @@
         </div>
     </div>
 </div>
-
-
 
 @if($errors->any())
 
