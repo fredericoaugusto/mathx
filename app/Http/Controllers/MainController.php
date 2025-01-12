@@ -27,10 +27,21 @@ class MainController extends Controller
             ]);
 
             $operations = [];
-            $operations[] = $request->check_sum ? 'sum' : '';
-            $operations[] = $request->check_subtraction ? 'subtraction' : '';
-            $operations[] = $request->check_multiplication ? 'multiplication' : '';
-            $operations[] = $request->check_division ? 'division' : '';
+            if($request->check_sum) {
+                $operations[] = 'sum';
+            }
+
+            if($request->check_subtraction) {
+                $operations[] = 'subtraction';
+            }
+
+            if($request->check_multiplication) {
+                $operations[] = 'multiplication';
+            }
+
+            if($request->check_division) {
+                $operations[] = 'division';
+            }
 
             $min = $request->number_one;
             $max = $request->number_two;
@@ -56,22 +67,34 @@ class MainController extends Controller
                         $solution = $number1 - $number2;
                         break;
                     case 'multiplication':
-                        $exercise = "$number1 * $number2 = ";
+                        $exercise = "$number1 X $number2 = ";
                         $solution = $number1 * $number2;
                         break;
                     case 'division':
-                        $exercise = "$number1 / $number2 = ";
+                        if ($number2 == 0) {
+                            $number2 = 1;
+                        }
+
+                        $exercise = "$number1 : $number2 = ";
                         $solution = $number1 / $number2;
                         break;
                 }
 
+                if (is_float($solution)) {
+                    $solution = number_format($solution, 2);
+                }
+
                 $exercises[] = [
+                    'operation' => $operation,
                     'exercise_number' => $index,
                     'exercise' => $exercise,
                     'solution' => "$exercise $solution",
                 ];
             }
-            dd($exercises);
+
+            return view('operations', [
+                'exercises' => $exercises,
+            ]);
 
     }
 
